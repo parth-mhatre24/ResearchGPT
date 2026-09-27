@@ -1,0 +1,42 @@
+name: Tests
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Check repository structure
+        run: |
+          test -f README.md
+          test -f PRD.md
+          test -f PROJECT_STATUS.md
+          test -f docs/Architecture.md
+          test -f docs/Development.md
+
+      - name: Run tests if available
+        shell: bash
+        run: |
+          if [ -f backend/requirements.txt ]; then
+            python -m pip install --upgrade pip
+            pip install -r backend/requirements.txt
+          fi
+
+          if find tests -type f -name "test_*.py" | grep -q .; then
+            python -m pytest tests
+          else
+            echo "No executable Python tests have been added yet."
+          fi
