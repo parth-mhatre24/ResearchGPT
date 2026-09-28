@@ -2,28 +2,28 @@
 
 ## Current State
 
-- **Phase:** Phase 4 — Classification
-- **Current Task:** Task 07 — TF-IDF Classification
-- **Status:** APPROVED
-- **Completed Tasks:** Task 01 — Repository Audit, Task 02 — Project Foundation, Task 03 — PDF Upload, Task 04 — PDF Extraction, Task 05 — Preprocessing, Task 06 — Dataset Pipeline & Download, Task 07 — TF-IDF Classification
+- **Phase:** Phase 4 — Classification / Phase 5 — NER
+- **Current Task:** Task 08 — Transformer Classification + Task 09 — NER Dataset Pipeline
+- **Status:** IN PROGRESS (both implemented, tests passing, awaiting full benchmark runs + human approval)
+- **Completed Tasks:** Task 01 — Repository Audit, Task 02 — Project Foundation, Task 03 — PDF Upload, Task 04 — PDF Extraction, Task 05 — Preprocessing, Task 06 — Dataset Pipeline & Download, Task 07 — TF-IDF Classification, Task 08 — Transformer Classifier Service (implemented), Task 09 — CRF NER Service (implemented)
 - **Approved Tasks:** Task 01 — Repository Audit, Task 02 — Project Foundation, Task 03 — PDF Upload, Task 04 — PDF Extraction, Task 05 — Preprocessing, Task 06 — Dataset Pipeline & Download, Task 07 — TF-IDF Classification
-- **Blocked Tasks:** None
+- **Blocked Tasks:** Transformer fine-tuning runs blocked — PyTorch 2.x is incompatible with Python 3.14 on Windows (WinError 1114 DLL init failure). Transformer tests are auto-skipped. Resolution: downgrade to Python 3.12 or wait for official PyTorch 3.14 support.
 
 ## Progress Against PRD.md
 
-- **PRD Functional Requirements:** **3 / 10 Completed (30%)**
+- **PRD Functional Requirements:** **3.5 / 10 Completed (~35%)**
   - [x] FR-01: PDF Upload (Completed & Approved)
   - [x] FR-02: PDF Text Extraction (Completed & Approved)
   - [x] FR-03: Preprocessing (Completed & Approved)
-  - [ ] FR-04: Classification (Classical ML & Transformer) — Classical baselines completed; Transformer classification pending (Task 08)
-  - [ ] FR-05: Named Entity Recognition / Keyphrase Extraction (BiLSTM-CRF & BERT)
+  - [~] FR-04: Classification (Classical ML & Transformer) — Classical TF-IDF baselines approved (Task 07); TransformerClassifierService implemented (Task 08), full fine-tuning blocked on Python 3.14/torch DLL issue
+  - [~] FR-05: Named Entity Recognition — CRFNERService implemented (Task 09), 19/19 unit tests pass; full CoNLL-2003 benchmark pending
   - [ ] FR-06: Summarization (T5 / BART)
   - [ ] FR-07: Semantic Similarity (STS-B)
   - [ ] FR-08: Semantic Retrieval (Sentence-BERT + FAISS)
   - [ ] FR-09: Question Answering (BERT / DistilBERT QA)
   - [ ] FR-10: RAG Pipeline (Retrieved Paper Grounding)
-- **Task Sequence Progress:** **7 / 20 Completed (35%)** (6 Approved, 1 Awaiting Approval)
-- **Phases Progress:** **3 Approved + Phase 4 In Progress / 14 Planned Phases (~25%)**
+- **Task Sequence Progress:** **9 / 20 Implemented (45%)** (7 Approved, 2 Awaiting Approval)
+- **Phases Progress:** **3 Approved + Phase 4 & 5 In Progress / 14 Planned Phases (~32%)**
 
 ## Development Rules
 
@@ -59,8 +59,8 @@
 | 1 | Repository and project foundation | Completed & Approved |
 | 2 | PDF upload and extraction | Completed & Approved |
 | 3 | NLP preprocessing | Completed & Approved |
-| 4 | Classification | In Progress |
-| 5 | NER | Not started |
+| 4 | Classification | In Progress — TransformerClassifierService implemented; fine-tuning blocked on Python 3.14/torch |
+| 5 | NER | In Progress — CRFNERService implemented; 19/19 unit tests pass; benchmark pending |
 | 6 | Summarization | Not started |
 | 7 | Semantic similarity | Not started |
 | 8 | Semantic embeddings | Not started |
@@ -79,9 +79,9 @@
 - [x] 4. PDF extraction (Approved)
 - [x] 5. Preprocessing (Approved)
 - [x] 6. Classification dataset pipeline & download (Approved)
-- [x] 7. TF-IDF classification (Completed, Awaiting Approval)
-- [ ] 8. Transformer classification
-- [ ] 9. NER dataset pipeline
+- [x] 7. TF-IDF classification (Approved)
+- [~] 8. Transformer classification (Implemented — fine-tuning runs blocked on Python 3.14/torch DLL issue)
+- [~] 9. NER dataset pipeline + CRF NER baseline (Implemented — 19/19 tests pass; full benchmark pending)
 - [ ] 10. BiLSTM-CRF NER
 - [ ] 11. BERT NER
 - [ ] 12. Summarization

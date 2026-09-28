@@ -102,3 +102,47 @@ class DatasetService:
         labels = clean_df[label_col].tolist()
 
         return texts, labels
+
+    def load_ner_data(
+        self,
+        dataset_key: str,
+        split: str,
+        label_map: Optional[Dict[int, str]] = None,
+    ) -> Tuple[List[List[str]], List[List[str]]]:
+        """Extract token lists and IOB2 label lists for NER tasks.
+
+        Args:
+            dataset_key: Dataset key, e.g. 'conll2003'.
+            split: Dataset split, e.g. 'train', 'validation', 'test'.
+            label_map: Optional mapping from integer tag IDs to IOB2 label strings.
+                       Defaults to the CoNLL-2003 standard mapping.
+
+        Returns:
+            Tuple of (token_sequences, label_sequences) where each element is
+            a list of lists (one inner list per sentence).
+        """
+        from backend.app.models.ner import CONLL_ID2LABEL
+
+        df = self.load_split(dataset_key, split)
+
+        # Validate expected columns
+        if "tokens" not in df.columns or "ner_tags" not in df.columns:
+            raise KeyError(
+                f"Expected columns 'tokens' and 'ner_tags' in dataset '{dataset_key}' "
+                f"(found: {list(df.columns)})"
+            )
+
+        lmap = label_map or CONLL_ID2LABEL
+
+        token_sequences: List[List[str]] = []
+        label_sequences: List[List[str]] = []
+
+        for _, row in df.iterrows():
+            tokens = list(row["tokens"])
+            tag_ids = list(row["ner_tags"])
+            labels = [lmap.get(int(t), "O") for t in tag_ids]
+            token_sequences.append(tokens)
+            label_sequences.append(labels)
+
+        return token_sequences, label_sequences
+
