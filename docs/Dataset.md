@@ -8,13 +8,13 @@ They are not intended to replace the final application's real-world input: resea
 
 ## 2. Dataset Table
 
-| Dataset | Task | Intended component |
-|---|---|---|
-| IMDB | Binary sentiment classification | Classification |
-| SMS Spam Collection | Binary spam classification | Classification |
-| SST-2 | Sentiment classification | Classification |
-| CoNLL-2003 | Named Entity Recognition | NER |
-| STS-B | Semantic Textual Similarity | Semantic similarity |
+| # | Dataset | Task | Link | Why it fits | Intended component |
+|---|---|---|---|---|---|
+| 1 | **IMDB Movie Reviews** | Binary sentiment classification | [Hugging Face](https://huggingface.co/datasets/stanfordnlp/imdb) | Directly replicates Paper 1's setup; large, clean, well-benchmarked | Classification |
+| 2 | **SMS Spam Collection** | Binary spam classification | [Kaggle](https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset) | Small, fast to train on; good for testing TF-IDF vs BERT on short text | Classification |
+| 3 | **SST-2 (Stanford Sentiment Treebank)** | Fine-grained/binary sentiment | [Hugging Face](https://huggingface.co/datasets/stanfordnlp/sst2) | Part of GLUE; lets you benchmark against BERT/DistilBERT paper results directly | Classification |
+| 4 | **CoNLL-2003** | Named Entity Recognition | [Hugging Face](https://huggingface.co/datasets/eriktks/conll2003) | Covers the NER angle (Paper 2 - Lample et al.); adds task diversity beyond classification | NER |
+| 5 | **STS Benchmark (STS-B)** | Semantic textual similarity | [STS Wiki](https://ixa2.si.ehu.eus/stswiki/index.php/STSbenchmark) | Lets you test Sentence-BERT style embeddings; nicely closes the loop with Paper 6 | Semantic similarity |
 
 ## 3. Classification Datasets
 

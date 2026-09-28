@@ -238,15 +238,24 @@ Performance optimization should not be introduced prematurely. First establish c
 
 ## 7. Dataset Requirements
 
-| Dataset | Primary use |
-|---|---|
-| IMDB | Binary text classification |
-| SMS Spam Collection | Binary text classification |
-| SST-2 | Sentiment classification |
-| CoNLL-2003 | NER |
-| STS-B | Semantic textual similarity |
+The project uses the following benchmark datasets to train, benchmark, and evaluate individual NLP components before integrating them into the end-to-end research assistant:
 
-The final application is intended to accept research papers independently of these benchmark datasets.
+| # | Dataset | Task | Link | Why it fits |
+|---|---|---|---|---|
+| 1 | **IMDB Movie Reviews** | Binary sentiment classification | [Hugging Face](https://huggingface.co/datasets/stanfordnlp/imdb) | Directly replicates Paper 1's setup; large, clean, well-benchmarked. |
+| 2 | **SMS Spam Collection** | Binary spam classification | [Kaggle](https://www.kaggle.com/datasets/uciml/sms-spam-collection-dataset) | Small, fast to train on; good for testing TF-IDF vs BERT on short text. |
+| 3 | **SST-2 (Stanford Sentiment Treebank)** | Fine-grained/binary sentiment | [Hugging Face](https://huggingface.co/datasets/stanfordnlp/sst2) | Part of GLUE; lets you benchmark against BERT/DistilBERT paper results directly. |
+| 4 | **CoNLL-2003** | Named Entity Recognition | [Hugging Face](https://huggingface.co/datasets/eriktks/conll2003) | Covers the NER angle (Paper 2 - Lample et al.); adds task diversity beyond classification. |
+| 5 | **STS Benchmark (STS-B)** | Semantic textual similarity | [STS Wiki](https://ixa2.si.ehu.eus/stswiki/index.php/STSbenchmark) | Lets you test Sentence-BERT style embeddings; nicely closes the loop with Paper 6. |
+
+### Dataset Utilization Notes
+
+- **IMDB Movie Reviews & SST-2**: Establish baselines and comparative benchmarks between classical ML models (TF-IDF + Naive Bayes/SVM/Logistic Regression) and Transformer-based models (BERT / DistilBERT).
+- **SMS Spam Collection**: Provides a short-text classification benchmark to observe feature sparsity challenges with TF-IDF versus contextual token embeddings in BERT.
+- **CoNLL-2003**: Serves as the primary sequence labeling benchmark to evaluate BiLSTM-CRF against transformer-based token classification.
+- **STS Benchmark (STS-B)**: Evaluates semantic similarity representations (cosine similarity with TF-IDF / GloVe vs. bi-encoder Sentence-BERT embeddings) before retrieval indexing with FAISS.
+
+*Note: The final application is intended to accept research papers independently of these benchmark datasets.*
 
 ## 8. Model Requirements
 
