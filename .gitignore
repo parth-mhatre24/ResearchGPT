@@ -49,6 +49,8 @@ storage/
 *.bin
 *.safetensors
 *.ckpt
+*.joblib
+models/saved/
 checkpoints/
 runs/
 wandb/

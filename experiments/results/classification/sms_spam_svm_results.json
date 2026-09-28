@@ -1,0 +1,66 @@
+{
+  "experiment_id": "sms_spam_svm_20260928_183543",
+  "dataset": "sms_spam",
+  "model_type": "svm",
+  "ngram_range": [
+    1,
+    2
+  ],
+  "max_features": 20000,
+  "train_samples": 4459,
+  "test_samples": 558,
+  "train_duration_sec": 0.118482,
+  "model_path": "models\\saved\\classical\\sms_spam_svm.joblib",
+  "metrics": {
+    "accuracy": 0.9838709677419355,
+    "precision_macro": 0.9785421545667448,
+    "recall_macro": 0.9512629399585921,
+    "f1_macro": 0.964331119713058,
+    "precision_weighted": 0.9837434841731509,
+    "recall_weighted": 0.9838709677419355,
+    "f1_weighted": 0.9836344078384381,
+    "confusion_matrix": [
+      [
+        481,
+        2
+      ],
+      [
+        7,
+        68
+      ]
+    ],
+    "classes": [
+      "0",
+      "1"
+    ],
+    "sample_count": 558,
+    "classification_report": {
+      "0": {
+        "precision": 0.985655737704918,
+        "recall": 0.9958592132505176,
+        "f1-score": 0.9907312049433573,
+        "support": 483.0
+      },
+      "1": {
+        "precision": 0.9714285714285714,
+        "recall": 0.9066666666666666,
+        "f1-score": 0.9379310344827586,
+        "support": 75.0
+      },
+      "accuracy": 0.9838709677419355,
+      "macro avg": {
+        "precision": 0.9785421545667448,
+        "recall": 0.9512629399585921,
+        "f1-score": 0.964331119713058,
+        "support": 558.0
+      },
+      "weighted avg": {
+        "precision": 0.9837434841731509,
+        "recall": 0.9838709677419355,
+        "f1-score": 0.9836344078384381,
+        "support": 558.0
+      }
+    }
+  },
+  "timestamp": "2026-09-28T18:35:43.026108+00:00"
+}

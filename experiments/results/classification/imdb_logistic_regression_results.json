@@ -1,0 +1,66 @@
+{
+  "experiment_id": "imdb_logistic_regression_20260928_183623",
+  "dataset": "imdb",
+  "model_type": "logistic_regression",
+  "ngram_range": [
+    1,
+    2
+  ],
+  "max_features": 20000,
+  "train_samples": 25000,
+  "test_samples": 25000,
+  "train_duration_sec": 9.264081,
+  "model_path": "models\\saved\\classical\\imdb_logistic_regression.joblib",
+  "metrics": {
+    "accuracy": 0.88836,
+    "precision_macro": 0.8883906263098033,
+    "recall_macro": 0.88836,
+    "f1_macro": 0.8883577991303089,
+    "precision_weighted": 0.8883906263098034,
+    "recall_weighted": 0.88836,
+    "f1_weighted": 0.8883577991303089,
+    "confusion_matrix": [
+      [
+        11049,
+        1451
+      ],
+      [
+        1340,
+        11160
+      ]
+    ],
+    "classes": [
+      "0",
+      "1"
+    ],
+    "sample_count": 25000,
+    "classification_report": {
+      "0": {
+        "precision": 0.8918395350714343,
+        "recall": 0.88392,
+        "f1-score": 0.8878621077584475,
+        "support": 12500.0
+      },
+      "1": {
+        "precision": 0.8849417175481722,
+        "recall": 0.8928,
+        "f1-score": 0.8888534905021703,
+        "support": 12500.0
+      },
+      "accuracy": 0.88836,
+      "macro avg": {
+        "precision": 0.8883906263098033,
+        "recall": 0.88836,
+        "f1-score": 0.8883577991303089,
+        "support": 25000.0
+      },
+      "weighted avg": {
+        "precision": 0.8883906263098034,
+        "recall": 0.88836,
+        "f1-score": 0.8883577991303089,
+        "support": 25000.0
+      }
+    }
+  },
+  "timestamp": "2026-09-28T18:36:23.256954+00:00"
+}
