@@ -48,6 +48,31 @@ def get_retrieval_service() -> VectorRetrievalService:
     # Seed foundational research papers for instant out-of-the-box querying
     sample_papers = [
         (
+            "researchgpt_system_whitepaper",
+            "ResearchGPT Overview & Mission: ResearchGPT is an integrated, production-grade scientific document intelligence "
+            "and natural language processing platform. It enables researchers to ingest academic PDF papers, "
+            "extract structured page-aware text, extract scientific named entities, synthesize abstractive summaries, "
+            "and ask complex questions with strict citation grounding and zero hallucination."
+        ),
+        (
+            "researchgpt_system_whitepaper",
+            "The Four Core Model Architectures Trained in ResearchGPT: "
+            "1. Model 1 (Classical Statistical ML): Sublinear TF-IDF (20,000 unigram/bigram features) with LinearSVC, "
+            "Logistic Regression, and Naive Bayes classifiers, achieving 98.39% accuracy on SMS Spam and 88.84% on IMDB reviews for sub-0.2ms classification. "
+            "2. Model 2 (Deep Neural BiLSTM-CRF): 100-dimensional GloVe word embeddings with 2-layer Bidirectional LSTM (128 hidden units per direction) "
+            "and a linear-chain Conditional Random Field (CRF) decoder with Viterbi search, achieving 90.29% token accuracy on CoNLL-2003 for grammatical BIO sequence tagging. "
+            "3. Model 3 (Fine-Tuned BERT-NER): Contextual transformer token classifier (dslim/bert-base-NER, 110M parameters) with WordPiece subword alignment, "
+            "achieving 91.48% micro F1 score on CoNLL-2003 (PER: 95.68%, LOC: 93.38%, ORG: 89.80%). "
+            "4. Model 4 (Sentence-BERT & FAISS Retrieval): Dense 384-dimensional metric embeddings using all-MiniLM-L6-v2 with Mean Pooling and L2 normalization, "
+            "achieving Pearson correlation r = 0.8709 on the STS-B benchmark (+43.6% gain over TF-IDF), indexed in FAISS with Flat-IP vector search for sub-10ms similarity retrieval."
+        ),
+        (
+            "researchgpt_system_whitepaper",
+            "Generative RAG & User Interface: Generative synthesis is powered by Google FLAN-T5 Seq2Seq (google/flan-t5-base) conditioned "
+            "on retrieved chunks with strict provenance grounding. The frontend is a modern glassmorphic web app with 6 responsive "
+            "screens: Document Ingestion, Paper Deep Dive, NLP Playground, Model Benchmarks, Semantic Retrieval, and RAG Assistant."
+        ),
+        (
             "vaswani_2017_attention_is_all_you_need",
             "Attention Is All You Need. Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, "
             "Llion Jones, Aidan N. Gomez, Lukasz Kaiser, Illia Polosukhin. "
@@ -76,7 +101,7 @@ def get_retrieval_service() -> VectorRetrievalService:
         )
     ]
     for doc_id, text in sample_papers:
-        service.add_document(document_id=doc_id, text=text, chunk_size=40, chunk_overlap=8)
+        service.add_document(document_id=doc_id, text=text, chunk_size=350, chunk_overlap=50)
     return service
 
 

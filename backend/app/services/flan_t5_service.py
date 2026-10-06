@@ -83,19 +83,19 @@ class FlanT5GenerativeService:
         if is_summary:
             prompt = (
                 f"Context:\n{context_str}\n\n"
-                f"Instruction: Provide a comprehensive multi-sentence summary of the research paper described in the context, explaining the proposed methodology, architecture, and key findings.\n"
+                f"Instruction: Provide a comprehensive summary of the research paper described in the context, covering the methodology, models, and key findings.\n"
                 f"Summary:"
             )
             min_len = 35
-            target_max_tokens = max(max_new_tokens, 220)
+            target_max_tokens = max(max_new_tokens, 350)
         else:
             prompt = (
                 f"Context:\n{context_str}\n\n"
                 f"Question: {q_clean}\n\n"
-                f"Answer: Provide a clear, detailed, and specific answer with relevant technical facts from the context.\n"
+                f"Answer: Answer the question thoroughly and list all points completely from the context.\n"
             )
             min_len = 15
-            target_max_tokens = max(max_new_tokens, 160)
+            target_max_tokens = max(max_new_tokens, 450)
 
         try:
             self._init_model()
@@ -112,11 +112,11 @@ class FlanT5GenerativeService:
                     **inputs,
                     max_new_tokens=target_max_tokens,
                     min_length=min_len,
-                    num_beams=num_beams,
-                    length_penalty=1.0,
-                    no_repeat_ngram_size=3,
-                    repetition_penalty=1.15,
-                    early_stopping=True,
+                    num_beams=2,
+                    length_penalty=1.2,
+                    no_repeat_ngram_size=0,
+                    repetition_penalty=1.0,
+                    early_stopping=False,
                 )
 
             generated_text = self.tokenizer.decode(outputs[0], skip_special_tokens=True).strip()

@@ -124,8 +124,13 @@ class RAGService:
         start_qa = time.time()
 
         if mode.lower() == "generative":
-            # Extract text passages from retrieved chunks
-            passages = [chunk.text for chunk in retrieval_resp.results]
+            # Extract top relevant text passages for generation
+            top_doc_id = top_chunk.metadata.document_id
+            relevant_chunks = [
+                chunk for chunk in retrieval_resp.results
+                if (chunk.similarity_score >= max(0.18, top_sim - 0.15) or chunk.metadata.document_id == top_doc_id)
+            ]
+            passages = [chunk.text for chunk in (relevant_chunks[:2] or [top_chunk])]
             generated_answer = self.generative_service.generate_answer(q_text, passages)
 
             qa_latency = (time.time() - start_qa) * 1000.0
