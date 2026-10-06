@@ -146,3 +146,32 @@ class DatasetService:
 
         return token_sequences, label_sequences
 
+    def load_similarity_data(
+        self,
+        dataset_key: str = "stsb",
+        split: str = "validation",
+    ) -> Tuple[List[str], List[str], List[float]]:
+        """Extract sentence pairs and ground truth similarity scores.
+
+        Args:
+            dataset_key: Dataset key, e.g. 'stsb'.
+            split: Dataset split, e.g. 'train', 'validation', 'test'.
+
+        Returns:
+            Tuple of (sentences_a, sentences_b, gold_scores).
+        """
+        df = self.load_split(dataset_key, split)
+
+        if "sentence1" not in df.columns or "sentence2" not in df.columns or "label" not in df.columns:
+            raise KeyError(
+                f"Expected columns 'sentence1', 'sentence2', and 'label' in dataset '{dataset_key}' "
+                f"(found: {list(df.columns)})"
+            )
+
+        clean_df = df.dropna(subset=["sentence1", "sentence2", "label"])
+        sentences_a = clean_df["sentence1"].astype(str).tolist()
+        sentences_b = clean_df["sentence2"].astype(str).tolist()
+        scores = clean_df["label"].astype(float).tolist()
+
+        return sentences_a, sentences_b, scores
+

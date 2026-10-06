@@ -4,7 +4,7 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-from app.models.preprocessing import (
+from backend.app.models.preprocessing import (
     ClassicalPreprocessingRequest,
     ClassicalPreprocessingResponse,
     TransformerPreprocessingRequest,

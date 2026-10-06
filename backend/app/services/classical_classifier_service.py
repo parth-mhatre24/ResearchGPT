@@ -76,6 +76,11 @@ class ClassicalClassifierService:
         self.classes_: Optional[List[Any]] = None
         self._build_pipeline()
 
+    @property
+    def is_trained(self) -> bool:
+        """Return True if model has been fitted."""
+        return self.classes_ is not None
+
     def _build_pipeline(self) -> None:
         """Construct the Scikit-Learn TF-IDF + Classifier Pipeline."""
         vectorizer = TfidfVectorizer(

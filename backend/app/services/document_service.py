@@ -5,8 +5,8 @@ from pathlib import Path
 
 from fastapi import HTTPException, UploadFile, status
 
-from app.core.config import settings
-from app.models.document import DocumentUploadResponse
+from backend.app.core.config import settings
+from backend.app.models.document import DocumentUploadResponse
 
 
 def sanitize_filename(filename: str) -> str:
@@ -90,3 +90,39 @@ def save_pdf_upload(file: UploadFile) -> DocumentUploadResponse:
         created_at=datetime.now(timezone.utc),
         storage_path=str(destination_path),
     )
+
+
+def list_uploaded_files() -> list[dict]:
+    """List all stored PDF files in upload directory."""
+    if not settings.UPLOAD_DIR.exists():
+        return []
+
+    files = []
+    for p in settings.UPLOAD_DIR.glob("*_*.pdf"):
+        parts = p.name.split("_", 1)
+        doc_id = parts[0]
+        orig_name = parts[1] if len(parts) > 1 else p.name
+        files.append({
+            "document_id": doc_id,
+            "filename": p.name,
+            "original_filename": orig_name,
+            "file_size_bytes": p.stat().st_size,
+            "created_at": datetime.fromtimestamp(p.stat().st_mtime, timezone.utc).isoformat(),
+        })
+    return sorted(files, key=lambda x: x["created_at"], reverse=True)
+
+
+def delete_uploaded_file(document_id: str) -> bool:
+    """Delete uploaded PDF file from disk for a given document_id."""
+    if not settings.UPLOAD_DIR.exists():
+        return False
+
+    matches = list(settings.UPLOAD_DIR.glob(f"{document_id}_*.pdf"))
+    deleted = False
+    for m in matches:
+        try:
+            m.unlink()
+            deleted = True
+        except Exception:
+            pass
+    return deleted

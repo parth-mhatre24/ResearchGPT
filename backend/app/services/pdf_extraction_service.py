@@ -5,8 +5,8 @@ from fastapi import HTTPException, status
 from pypdf import PdfReader
 from pypdf.errors import PdfReadError
 
-from app.core.config import settings
-from app.models.document import DocumentExtractionResponse, PageExtraction
+from backend.app.core.config import settings
+from backend.app.models.document import DocumentExtractionResponse, PageExtraction
 
 
 def locate_uploaded_pdf(document_id: str) -> Path:
