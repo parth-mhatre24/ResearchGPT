@@ -4,7 +4,12 @@ import json
 from pathlib import Path
 import pandas as pd
 import pytest
-from datasets import Dataset
+try:
+    from datasets import Dataset
+    _DATASETS_AVAILABLE = True
+except Exception:
+    _DATASETS_AVAILABLE = False
+    Dataset = None  # type: ignore[assignment,misc]
 
 from backend.app.services.dataset_service import DatasetService
 from scripts.download_datasets import DATASET_CONFIGS, split_single_dataset
@@ -21,7 +26,7 @@ def test_dataset_configs_contain_all_five_benchmarks():
     assert DATASET_CONFIGS["conll2003"]["task"] == "Named Entity Recognition"
     assert DATASET_CONFIGS["stsb"]["task"] == "Semantic textual similarity"
 
-
+@pytest.mark.skipif(not _DATASETS_AVAILABLE, reason="HuggingFace datasets / pyarrow not available")
 def test_split_single_dataset():
     """Test splitting single-split datasets with stratification."""
     data = {

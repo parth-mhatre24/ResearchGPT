@@ -1,0 +1,93 @@
+{
+  "model_type": "bilstm_crf",
+  "dataset": "conll2003",
+  "epochs": 3,
+  "lr": 0.001,
+  "training_result": {
+    "epochs": 3,
+    "training_time_sec": 100.39,
+    "vocab_size": 21011,
+    "val_metrics": {
+      "precision_micro": 0.7985,
+      "recall_micro": 0.5056,
+      "f1_micro": 0.6191,
+      "precision_macro": 0.7973,
+      "recall_macro": 0.4748,
+      "f1_macro": 0.5847,
+      "per_entity_metrics": [
+        {
+          "entity_type": "LOC",
+          "precision": 0.8116,
+          "recall": 0.6451,
+          "f1": 0.7188,
+          "support": 1837
+        },
+        {
+          "entity_type": "MISC",
+          "precision": 0.803,
+          "recall": 0.3449,
+          "f1": 0.4825,
+          "support": 922
+        },
+        {
+          "entity_type": "ORG",
+          "precision": 0.7868,
+          "recall": 0.3468,
+          "f1": 0.4814,
+          "support": 1341
+        },
+        {
+          "entity_type": "PER",
+          "precision": 0.7878,
+          "recall": 0.5624,
+          "f1": 0.6563,
+          "support": 1842
+        }
+      ],
+      "token_accuracy": 0.9147,
+      "sample_count": 3250,
+      "model_type": "bilstm_crf"
+    }
+  },
+  "test_metrics": {
+    "precision_micro": 0.7612,
+    "recall_micro": 0.4543,
+    "f1_micro": 0.569,
+    "precision_macro": 0.7518,
+    "recall_macro": 0.4316,
+    "f1_macro": 0.539,
+    "per_entity_metrics": [
+      {
+        "entity_type": "LOC",
+        "precision": 0.7777,
+        "recall": 0.6061,
+        "f1": 0.6813,
+        "support": 1668
+      },
+      {
+        "entity_type": "MISC",
+        "precision": 0.7003,
+        "recall": 0.2963,
+        "f1": 0.4164,
+        "support": 702
+      },
+      {
+        "entity_type": "ORG",
+        "precision": 0.7891,
+        "recall": 0.3311,
+        "f1": 0.4665,
+        "support": 1661
+      },
+      {
+        "entity_type": "PER",
+        "precision": 0.74,
+        "recall": 0.4929,
+        "f1": 0.5917,
+        "support": 1617
+      }
+    ],
+    "token_accuracy": 0.9029,
+    "sample_count": 3453,
+    "model_type": "bilstm_crf"
+  }
+}

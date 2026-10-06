@@ -27,7 +27,7 @@ logger = logging.getLogger("transformer_classifier_service")
 # ---------------------------------------------------------------------------
 try:
     import torch
-    from datasets import Dataset
+    from torch.utils.data import Dataset as TorchDataset
     from sklearn.metrics import (
         accuracy_score,
         classification_report,
@@ -36,6 +36,11 @@ try:
         precision_score,
         recall_score,
     )
+    import transformers.utils as _u
+    import transformers.utils.import_utils as _iu
+    _iu.is_datasets_available = lambda: False
+    _u.is_datasets_available = lambda: False
+
     from transformers import (
         AutoModelForSequenceClassification,
         AutoTokenizer,
@@ -46,14 +51,37 @@ try:
     )
 
     _DEPS_AVAILABLE = True
-except ImportError as _e:  # pragma: no cover
+    _IMPORT_ERROR = ""
+except Exception as _e:  # pragma: no cover
     _DEPS_AVAILABLE = False
     _IMPORT_ERROR = str(_e)
+    TorchDataset = object  # type: ignore[misc,assignment]
 
 from backend.app.models.classification import (
     ClassificationEvaluationMetrics,
     ClassificationResponse,
 )
+
+
+
+class PyTorchTextDataset:
+    """PyTorch-compatible Dataset wrapper for Hugging Face Trainer."""
+
+    def __init__(self, encodings: Dict[str, Any], labels: Optional[List[int]] = None):
+        self.encodings = encodings
+        self.labels = labels
+
+    def __getitem__(self, idx: int) -> Dict[str, Any]:
+        item = {key: val[idx] for key, val in self.encodings.items()}
+        if self.labels is not None:
+            item["labels"] = self.labels[idx]
+        # Convert lists to tensors if torch is available
+        if _DEPS_AVAILABLE:
+            item = {k: torch.tensor(v) if not isinstance(v, torch.Tensor) else v for k, v in item.items()}
+        return item
+
+    def __len__(self) -> int:
+        return len(self.encodings["input_ids"])
 
 
 class TransformerClassifierService:
@@ -84,11 +112,8 @@ class TransformerClassifierService:
         output_dir: Optional[Union[str, Path]] = None,
         random_state: int = 42,
     ):
-        if not _DEPS_AVAILABLE:
-            raise ImportError(
-                f"transformers and torch are required for TransformerClassifierService. "
-                f"Install with: pip install transformers torch. Original error: {_IMPORT_ERROR}"
-            )
+        # Note: deps check is deferred to train()/predict() calls so the
+        # service object can always be instantiated for inspection/testing.
 
         self.model_name = model_name
         self.num_labels = num_labels
@@ -119,20 +144,15 @@ class TransformerClassifierService:
         self.id2label = {i: lbl for lbl, i in self.label2id.items()}
         self.num_labels = len(unique)
 
-    def _tokenize(self, examples: Dict) -> Dict:
-        return self.tokenizer(
-            examples["text"],
+    def _make_hf_dataset(self, texts: List[str], labels: Optional[List[Any]] = None) -> "TorchDataset":
+        encodings = self.tokenizer(
+            texts,
             truncation=True,
+            padding=True,
             max_length=self.max_length,
         )
-
-    def _make_hf_dataset(self, texts: List[str], labels: Optional[List[Any]] = None) -> Dataset:
-        data: Dict[str, List] = {"text": texts}
-        if labels is not None:
-            data["labels"] = [self.label2id[lbl] for lbl in labels]
-        ds = Dataset.from_dict(data)
-        ds = ds.map(self._tokenize, batched=True, remove_columns=["text"])
-        return ds
+        encoded_labels = [self.label2id[lbl] for lbl in labels] if labels is not None else None
+        return PyTorchTextDataset(encodings, encoded_labels)
 
     @staticmethod
     def _compute_metrics(eval_pred) -> Dict[str, float]:
@@ -194,13 +214,17 @@ class TransformerClassifierService:
         use_gpu = torch.cuda.is_available()
         callbacks = [EarlyStoppingCallback(early_stopping_patience=2)] if eval_ds else []
 
+        steps_per_epoch = max(1, len(train_texts) // max(1, self.batch_size))
+        total_steps = steps_per_epoch * self.num_epochs
+        warmup_steps = int(self.warmup_ratio * total_steps)
+
         training_args = TrainingArguments(
             output_dir=str(self.output_dir),
             num_train_epochs=self.num_epochs,
             per_device_train_batch_size=self.batch_size,
             per_device_eval_batch_size=self.batch_size * 2,
             learning_rate=self.learning_rate,
-            warmup_ratio=self.warmup_ratio,
+            warmup_steps=warmup_steps,
             weight_decay=0.01,
             eval_strategy="epoch" if eval_ds else "no",
             save_strategy="epoch" if eval_ds else "no",

@@ -1,0 +1,23 @@
+{
+  "model_name": "t5-small",
+  "num_beams": 4,
+  "metrics": {
+    "rouge1": 0.48,
+    "rouge2": 0.2153,
+    "rougeL": 0.2565,
+    "sample_count": 2,
+    "model_type": "t5-small"
+  },
+  "evaluations": [
+    {
+      "title": "Attention Is All You Need",
+      "reference": "We propose the Transformer, a novel neural network architecture based solely on attention mechanisms, dispensing with recurrence and convolutions to achieve superior translation quality and faster training.",
+      "generated": "the dominant sequence transduction models are based on complex recurrent or convolutional neural networks. the best performing models connect the encoder and decoder through an attention mechanism. we propose a new simple network architecture, the Transformer."
+    },
+    {
+      "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+      "reference": "BERT introduces deep bidirectional transformer pre-training from unlabeled text, enabling state-of-the-art fine-tuning across diverse natural language processing tasks.",
+      "generated": "a new language representation model called BERT is designed to pre-train deep bidirectional representations from unlabeled text. the pre-trained model can be fine-tuned with just one additional output layer to create state-of-the-art models."
+    }
+  ]
+}

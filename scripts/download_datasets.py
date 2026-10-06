@@ -18,7 +18,14 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 import pandas as pd
-from datasets import Dataset, DatasetDict, load_dataset
+try:
+    from datasets import Dataset, DatasetDict, load_dataset
+    _DATASETS_AVAILABLE = True
+except Exception as _e:
+    _DATASETS_AVAILABLE = False
+    _DATASETS_IMPORT_ERROR = str(_e)
+    Dataset = Any  # type: ignore[misc]
+    DatasetDict = Any  # type: ignore[misc]
 
 logging.basicConfig(
     level=logging.INFO,
