@@ -9,9 +9,9 @@ if backend_dir not in sys.path:
     sys.path.insert(0, backend_dir)
 
 from fastapi.testclient import TestClient
-from app.main import app
-from app.core.config import settings
-from app.services.document_service import sanitize_filename
+from backend.app.main import app
+from backend.app.core.config import settings
+from backend.app.services.document_service import sanitize_filename
 
 client = TestClient(app)
 
