@@ -1,13 +1,13 @@
 from fastapi import APIRouter, Path as ApiPath, status
 
-from app.models.preprocessing import (
+from backend.app.models.preprocessing import (
     ClassicalPreprocessingRequest,
     ClassicalPreprocessingResponse,
     TransformerPreprocessingRequest,
     TransformerPreprocessingResponse,
 )
-from app.services.pdf_extraction_service import extract_document_text_by_id
-from app.services.preprocessing_service import preprocess_classical, preprocess_transformer
+from backend.app.services.pdf_extraction_service import extract_document_text_by_id
+from backend.app.services.preprocessing_service import preprocess_classical, preprocess_transformer
 
 router = APIRouter()
 
