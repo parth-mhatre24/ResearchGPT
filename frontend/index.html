@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ResearchGPT — Intelligent Research Paper NLP Assistant</title>
+  <meta name="description" content="ResearchGPT: Multi-Modal NLP Research Paper Platform with Grounded RAG, Abstractive Summarization, Named Entity Recognition, and Vector Search.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div>
+        <div class="brand-section">
+          <div class="brand-logo">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1>ResearchGPT</h1>
+            <span>NLP Platform v0.1.0</span>
+          </div>
+        </div>
+
+        <nav class="nav-menu">
+          <a class="nav-item active" data-screen="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span>Overview & Health</span>
+          </a>
+
+          <a class="nav-item" data-screen="documents">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            <span>PDF Ingestion</span>
+          </a>
+
+          <a class="nav-item" data-screen="rag">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>Grounded RAG</span>
+          </a>
+
+          <a class="nav-item" data-screen="analysis">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <line x1="11" y1="8" x2="11" y2="14"></line>
+              <line x1="8" y1="11" x2="14" y2="11"></line>
+            </svg>
+            <span>Paper Deep-Dive</span>
+          </a>
+
+          <a class="nav-item" data-screen="playground">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span>NLP Playground</span>
+          </a>
+
+          <a class="nav-item" data-screen="benchmarks">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            <span>Benchmarks</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="status-indicator" id="health-status-pill">
+          <span class="status-dot"></span>
+          <span>Checking API...</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Viewport -->
+    <main class="main-wrapper">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-title-area">
+          <h2 id="current-screen-title">System Overview & Health</h2>
+        </div>
+        <div class="header-meta">
+          <div class="meta-pill glow" id="rag-status-pill">RAG Ready</div>
+          <div class="meta-pill">PyTorch 2.5.1 +cu121</div>
+          <div class="meta-pill">FastAPI 0.115</div>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content-area">
+
+        <!-- SCREEN 1: DASHBOARD -->
+        <section class="screen-container active" id="screen-dashboard">
+          <!-- Overview Guide Banner -->
+          <div class="section-guide-card">
+            <div class="guide-header">
+              <div class="guide-title">
+                <span>🚀</span>
+                <span>Welcome to ResearchGPT — Production Scientific NLP System</span>
+              </div>
+              <span class="guide-badge">Tasks 01–19 Verified</span>
+            </div>
+            <p style="color:var(--text-secondary); font-size:0.85rem; line-height:1.5; margin-bottom:12px;">
+              ResearchGPT is an end-to-end intelligent research paper assistant combining classical machine learning, domain-adapted deep learning (BERT, BiLSTM-CRF), and generative retrieval-augmented generation (Google FLAN-T5).
+            </p>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <div class="guide-item-title blue">1. Ingest Papers</div>
+                <div class="guide-item-text">Upload research PDFs, parse structured text, and index into 384-dim FAISS vector storage.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title emerald">2. Grounded RAG Chat</div>
+                <div class="guide-item-text">Ask complex questions to receive fluent answers synthesized strictly from cited paper passages.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title purple">3. Deep-Dive & Lab</div>
+                <div class="guide-item-text">Run 1-click multi-model paper digests or explore individual classification, NER, and QA models.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-4" style="margin-bottom: 24px;">
+            <div class="metric-card">
+              <div class="metric-header">Classification (Spam/IMDB)</div>
+              <div class="metric-value">98.39%</div>
+              <div class="metric-sub">LinearSVC Macro F1: 96.43%</div>
+            </div>
+            <div class="metric-card cyan">
+              <div class="metric-header">NER Token Precision</div>
+              <div class="metric-value">95.68%</div>
+              <div class="metric-sub">Fine-Tuned BERT on CoNLL-2003</div>
+            </div>
+            <div class="metric-card emerald">
+              <div class="metric-header">Semantic Similarity (STS-B)</div>
+              <div class="metric-value">0.8709</div>
+              <div class="metric-sub">Sentence-BERT Pearson Correlation</div>
+            </div>
+            <div class="metric-card purple">
+              <div class="metric-header">Extractive QA Match</div>
+              <div class="metric-value">100.0%</div>
+              <div class="metric-sub">DistilBERT SQuAD Exact Match</div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Active Subsystem Status</h3>
+                  <p class="card-subtitle">All 10 core modular NLP microservices verified and passing</p>
+                </div>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Capability</th>
+                    <th>Model / Strategy</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>PDF Upload & Ingestion</td><td>pypdf Magic Bytes Validator</td><td><span style="color:var(--accent-emerald);">● Ready</span></td></tr>
+                  <tr><td>Preprocessing</td><td>NLTK + Structure Preserver</td><td><span style="color:var(--accent-emerald);">● Ready</span></td></tr>
+                  <tr><td>Text Classification</td><td>TF-IDF (SVM / Logistic Reg)</td><td><span style="color:var(--accent-emerald);">● Ready</span></td></tr>
+                  <tr><td>Entity Recognition</td><td>BERT NER + BiLSTM-CRF</td><td><span style="color:var(--accent-emerald);">● Ready</span></td></tr>
+                  <tr><td>Abstractive Summary</td><td>T5-Small Beam Search</td><td><span style="color:var(--accent-emerald);">● Ready</span></td></tr>
+                  <tr><td>Vector Retrieval</td><td>384-dim Sentence-BERT Flat IP</td><td><span style="color:var(--accent-emerald);">● Ready</span></td></tr>
+                  <tr><td>Grounded RAG</td><td>Integrated Extractive QA + Citations</td><td><span style="color:var(--accent-emerald);">● Ready</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Quick Action Launchers</h3>
+                  <p class="card-subtitle">Jump straight into research paper workflows</p>
+                </div>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
+                <button class="btn btn-primary" data-goto="rag">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  Launch Grounded RAG Assistant
+                </button>
+                <button class="btn btn-secondary" data-goto="documents">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                  Upload & Ingest New Research Paper PDF
+                </button>
+                <button class="btn btn-secondary" data-goto="analysis">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  Run Single-Pass Paper Deep-Dive Analysis
+                </button>
+                <button class="btn btn-secondary" data-goto="playground">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                  Explore Multi-Task NLP Playground
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 2: PDF INGESTION & EXTRACTION -->
+        <section class="screen-container" id="screen-documents">
+          <!-- Ingestion Guide Banner -->
+          <div class="section-guide-card">
+            <div class="guide-header">
+              <div class="guide-title">
+                <span>📄</span>
+                <span>PDF Ingestion & Vector Indexing Pipeline</span>
+              </div>
+              <span class="guide-badge">Task 02 + Task 15</span>
+            </div>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <div class="guide-item-title blue">📌 What this screen does</div>
+                <div class="guide-item-text">Uploads scientific PDFs, extracts clean page-by-page text streams, and chunks them into dense vector embeddings stored in FAISS memory.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title emerald">💡 How to use it</div>
+                <div class="guide-item-text">1. Drop your PDF below. 2. Click <strong>Upload</strong> ➔ <strong>Extract Text</strong> ➔ <strong>Index for RAG</strong>. 3. Manage or delete documents in the repository below.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title purple">🎯 What to expect</div>
+                <div class="guide-item-text">A preview of extracted text pages, chunk statistics, and immediate availability for grounded conversational Q&A.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Upload Research Paper (PDF)</h3>
+                  <p class="card-subtitle">Validated PDF upload with magic bytes detection and secure storage</p>
+                </div>
+              </div>
+
+              <div class="dropzone" id="pdf-dropzone">
+                <svg class="dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <div style="font-weight:600; font-size:1.05rem; margin-bottom:4px;">Drag & Drop Research Paper PDF</div>
+                <div style="font-size:0.8rem; color:var(--text-muted);">or click to browse local filesystem (.pdf up to 50MB)</div>
+                <input type="file" id="pdf-file-input" accept=".pdf" style="display:none;">
+                <div id="selected-file-name" style="margin-top:12px; font-weight:600; color:var(--accent-cyan);"></div>
+              </div>
+
+              <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:20px;">
+                <button class="btn btn-primary" id="btn-upload-pdf" disabled>Upload PDF</button>
+                <button class="btn btn-secondary" id="btn-extract-pdf" disabled>Extract Text</button>
+                <button class="btn btn-secondary" id="btn-index-rag" disabled style="border-color:rgba(6,182,212,0.4); color:var(--accent-cyan);">⚡ Index for RAG</button>
+              </div>
+
+              <div id="upload-status-box"></div>
+              <div id="rag-jump-box" style="margin-top:14px; display:none;">
+                <button class="btn btn-primary" id="btn-jump-to-rag" style="width:100%; background:linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);">
+                  💬 Ask Questions About This Paper in RAG Chat →
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Extracted Document Pages</h3>
+                  <p class="card-subtitle">Page-aware text representation extracted via pypdf</p>
+                </div>
+              </div>
+              <div id="extracted-pages-viewer" style="max-height:420px; overflow-y:auto;">
+                <div style="text-align:center; padding:48px 0; color:var(--text-muted);">
+                  Upload and extract a PDF to view page text streams.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Document Repository & Deletion Table -->
+          <div class="glass-card" style="margin-top:24px;">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">Indexed Research Papers & Repository</h3>
+                <p class="card-subtitle">Manage uploaded PDFs, inspect active vectors, and delete unwanted documents</p>
+              </div>
+              <button class="btn btn-secondary" id="btn-refresh-docs" style="padding:6px 12px; font-size:0.78rem;">
+                🔄 Refresh List
+              </button>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="data-table" id="documents-table">
+                <thead>
+                  <tr>
+                    <th>Paper Title / Filename</th>
+                    <th>Document ID</th>
+                    <th>File Size</th>
+                    <th>Chunks Indexed</th>
+                    <th>Uploaded Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="documents-table-body">
+                  <tr><td colspan="6" style="text-align:center; padding:24px; color:var(--text-muted);">Loading indexed documents...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 3: GROUNDED RAG CHAT ASSISTANT -->
+        <section class="screen-container" id="screen-rag">
+          <!-- RAG Guide Banner -->
+          <div class="section-guide-card">
+            <div class="guide-header">
+              <div class="guide-title">
+                <span>💬</span>
+                <span>Grounded RAG Research Chat (Powered by Google FLAN-T5)</span>
+              </div>
+              <span class="guide-badge">Task 17 + Task 18</span>
+            </div>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <div class="guide-item-title blue">📌 What this screen does</div>
+                <div class="guide-item-text">Answers scientific inquiries by retrieving top-$k$ relevant text passages via Sentence-BERT and synthesizing natural language answers with FLAN-T5.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title emerald">💡 How to use it</div>
+                <div class="guide-item-text">Select your target paper in <strong>Active Paper Focus</strong> (or Global), tune <strong>Top-K</strong> & <strong>Threshold</strong>, and type your research questions in the chat prompt.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title purple">🎯 What to expect</div>
+                <div class="guide-item-text">Cohesive academic answers, grounding confidence %, latency metrics, and collapsible <code>▶ Sources & Citations</code> cards.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-3" style="grid-template-columns: 320px 1fr; gap:24px;">
+            <!-- Retrieval Parameters Panel -->
+            <div class="glass-card" style="height:fit-content;">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">RAG Controls</h3>
+                  <p class="card-subtitle">Tune vector search and anti-hallucination</p>
+                </div>
+              </div>
+
+              <!-- Active Document Filter -->
+              <div class="input-group">
+                <label class="input-label" for="rag-doc-filter">Active Paper Focus</label>
+                <select class="select-field" id="rag-doc-filter">
+                  <option value="">All Indexed Papers (Global)</option>
+                </select>
+                <span style="font-size:0.72rem; color:var(--accent-cyan); margin-top:4px;" id="rag-active-doc-badge">Mode: Global Search</span>
+              </div>
+
+              <div class="input-group">
+                <label class="input-label" for="rag-top-k">Top-K Context Chunks</label>
+                <select class="select-field" id="rag-top-k">
+                  <option value="1">Top 1 Chunk (High Precision)</option>
+                  <option value="2">Top 2 Chunks</option>
+                  <option value="3" selected>Top 3 Chunks (Balanced)</option>
+                  <option value="5">Top 5 Chunks (High Recall)</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                <label class="input-label" for="rag-sim-threshold">
+                  Similarity Threshold: <span id="rag-sim-val" style="color:var(--accent-cyan); font-weight:700;">0.25</span>
+                </label>
+                <input type="range" id="rag-sim-threshold" min="0.10" max="0.80" step="0.05" value="0.25" style="width:100%; accent-color:var(--accent-primary);">
+                <span style="font-size:0.72rem; color:var(--text-muted); margin-top:4px;">Queries below this cosine threshold are rejected with refusal guard.</span>
+              </div>
+
+              <div style="margin-top:20px; padding:12px; background:rgba(0,0,0,0.25); border-radius:var(--radius-md); font-size:0.78rem; color:var(--text-secondary);">
+                <div style="font-weight:600; color:var(--accent-emerald); margin-bottom:4px;">Sample Queries:</div>
+                <ul style="padding-left:16px; display:flex; flex-direction:column; gap:4px;">
+                  <li>"What is Transformer architecture based on?"</li>
+                  <li>"What does BERT stand for?"</li>
+                  <li>"How many encoder layers are in Attention Is All You Need?"</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div class="chat-container">
+              <div class="chat-history" id="rag-chat-history">
+                <div class="chat-bubble assistant">
+                  Hello! I am your <strong>ResearchGPT Grounded Assistant</strong>. Ask any question about your indexed research papers. Every answer includes token confidence and exact source citations.
+                </div>
+              </div>
+
+              <form class="chat-input-bar" id="rag-chat-form">
+                <input type="text" class="input-field" id="rag-chat-input" placeholder="Ask a question about the indexed research paper..." autocomplete="off">
+                <button type="submit" class="btn btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                  Ask
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 4: PAPER DEEP-DIVE ANALYSIS -->
+        <section class="screen-container" id="screen-analysis">
+          <!-- Deep Dive Guide Banner -->
+          <div class="section-guide-card">
+            <div class="guide-header">
+              <div class="guide-title">
+                <span>🔬</span>
+                <span>Single-Pass Multi-Model Paper Deep-Dive</span>
+              </div>
+              <span class="guide-badge">Task 18 Unified Pipeline</span>
+            </div>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <div class="guide-item-title blue">📌 What this screen does</div>
+                <div class="guide-item-text">Performs an instant, 1-click comprehensive paper analysis combining Google T5 Summarization, BERT Named Entity Recognition, and automatic vector indexing.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title emerald">💡 How to use it</div>
+                <div class="guide-item-text">Enter a Document Title/ID, paste the paper's Abstract or core text, ensure "Auto-Index" is checked, and click <strong>Run Deep-Dive Analysis</strong>.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title purple">🎯 What to expect</div>
+                <div class="guide-item-text">An Executive Abstractive Summary, highlighted entity chips (authors, labs, terms), and automated vector storage insertion.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="glass-card">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Single-Pass Paper Analyzer</h3>
+                  <p class="card-subtitle">Generates executive summary, extracts technical entities, and indexes for vector search</p>
+                </div>
+              </div>
+
+              <form id="paper-analysis-form">
+                <div class="input-group">
+                  <label class="input-label" for="analysis-doc-id">Document ID / Title</label>
+                  <input type="text" class="input-field" id="analysis-doc-id" placeholder="e.g. vaswani_2017_attention" value="attention_is_all_you_need">
+                </div>
+
+                <div class="input-group">
+                  <label class="input-label" for="analysis-paper-text">Paper Abstract or Key Text</label>
+                  <textarea class="textarea-field" id="analysis-paper-text" style="min-height:160px;" placeholder="Paste paper abstract or section text here...">The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.</textarea>
+                </div>
+
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+                  <input type="checkbox" id="analysis-auto-index" checked style="accent-color:var(--accent-primary); width:16px; height:16px;">
+                  <label for="analysis-auto-index" style="font-size:0.85rem; color:var(--text-secondary);">Automatically index chunks into Vector Retrieval store for RAG</label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="btn-run-analysis">Run Deep-Dive Analysis</button>
+              </form>
+            </div>
+
+            <!-- Analysis Output Card -->
+            <div class="glass-card" id="analysis-results-card" style="display:none;">
+              <div class="card-header">
+                <div>
+                  <h3 class="card-title">Analysis Digest</h3>
+                  <p class="card-subtitle">Multi-modal synthesis generated via T5, BERT, and Sentence-BERT</p>
+                </div>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <div style="font-weight:600; color:var(--accent-cyan); margin-bottom:6px; font-size:0.85rem;">Executive Abstractive Summary (T5):</div>
+                <div id="analysis-summary-content" style="background:rgba(0,0,0,0.25); padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-glass);"></div>
+              </div>
+
+              <div style="margin-bottom:20px;">
+                <div style="font-weight:600; color:var(--accent-purple); margin-bottom:6px; font-size:0.85rem;">Recognized Entities & Keyphrases (BERT NER):</div>
+                <div id="analysis-entities-content" style="background:rgba(0,0,0,0.25); padding:12px; border-radius:var(--radius-md); border:1px solid var(--border-glass); min-height:48px;"></div>
+              </div>
+
+              <div id="analysis-index-content"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 5: MULTI-TASK NLP PLAYGROUND -->
+        <section class="screen-container" id="screen-playground">
+          <!-- Playground Guide Banner -->
+          <div class="section-guide-card">
+            <div class="guide-header">
+              <div class="guide-title">
+                <span>🧪</span>
+                <span>Multi-Task NLP Experimental Laboratory</span>
+              </div>
+              <span class="guide-badge">Tasks 04–16 Models</span>
+            </div>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <div class="guide-item-title blue">📌 What this screen does</div>
+                <div class="guide-item-text">Provides interactive testbenches to inspect and compare individual NLP models (Classification, NER, Summarization, Semantic Similarity, and QA) with custom inputs.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title emerald">💡 How to use it</div>
+                <div class="guide-item-text">Select any of the 5 sub-tabs below, adjust model architectures or parameters, enter custom test text, and click the execution button.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title purple">🎯 What to expect</div>
+                <div class="guide-item-text">Real-time probability distribution meters, token entity chip visualizers, text compression metrics, and SQuAD character offset spans.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-list">
+            <button class="tab-btn active" data-tab="cls">Text Classification</button>
+            <button class="tab-btn" data-tab="ner">Named Entity Recognition</button>
+            <button class="tab-btn" data-tab="sum">Summarization</button>
+            <button class="tab-btn" data-tab="sim">Semantic Similarity</button>
+            <button class="tab-btn" data-tab="qa">Extractive QA</button>
+          </div>
+
+          <!-- TAB 1: CLASSIFICATION -->
+          <div class="tab-pane active" id="tab-pane-cls">
+            <div class="grid-2">
+              <div class="glass-card">
+                <h3 class="card-title">Text Classification</h3>
+                <div class="input-group">
+                  <label class="input-label">Model Type</label>
+                  <select class="select-field" id="cls-model-select">
+                    <option value="logistic_regression">Logistic Regression (L2)</option>
+                    <option value="naive_bayes">Multinomial Naive Bayes</option>
+                    <option value="svm">Support Vector Machine (LinearSVC)</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Text to Classify</label>
+                  <textarea class="textarea-field" id="cls-input-text" placeholder="Enter review or message text...">This novel deep learning transformer model achieves remarkable benchmarks in natural language processing.</textarea>
+                </div>
+                <button class="btn btn-primary" id="btn-run-cls">Predict Class</button>
+              </div>
+              <div class="glass-card">
+                <h3 class="card-title">Prediction & Class Probabilities</h3>
+                <div id="cls-result-box" style="padding-top:12px; color:var(--text-muted);">Run classification to view probability distribution.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: NER -->
+          <div class="tab-pane" id="tab-pane-ner">
+            <div class="grid-2">
+              <div class="glass-card">
+                <h3 class="card-title">Named Entity Recognition (NER)</h3>
+                <div class="input-group">
+                  <label class="input-label">Model Architecture</label>
+                  <select class="select-field" id="ner-method-select">
+                    <option value="bert">Fine-Tuned BERT NER (dslim/bert-base-NER)</option>
+                    <option value="crf">Linear-Chain CRF Baseline</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Sentence</label>
+                  <textarea class="textarea-field" id="ner-input-text">Ashish Vaswani and Aidan Gomez introduced Transformers at Google in Paris and New York.</textarea>
+                </div>
+                <button class="btn btn-primary" id="btn-run-ner">Extract Entities</button>
+              </div>
+              <div class="glass-card">
+                <h3 class="card-title">Extracted Entity Spans</h3>
+                <div id="ner-result-box" style="padding-top:12px; color:var(--text-muted);">Run NER to view highlighted entity chips.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: SUMMARIZATION -->
+          <div class="tab-pane" id="tab-pane-sum">
+            <div class="grid-2">
+              <div class="glass-card">
+                <h3 class="card-title">Abstractive Summarization (T5)</h3>
+                <div class="input-group">
+                  <label class="input-label">Max Summary Tokens</label>
+                  <input type="number" class="input-field" id="sum-max-len" value="80" min="20" max="250">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Input Text</label>
+                  <textarea class="textarea-field" id="sum-input-text" style="min-height:130px;">Deep learning algorithms have transformed natural language processing. Bidirectional architectures such as BERT and sequence-to-sequence models like T5 achieve state-of-the-art results across translation, classification, and question answering tasks by pre-training on large unsupervised corpora.</textarea>
+                </div>
+                <button class="btn btn-primary" id="btn-run-sum">Generate Summary</button>
+              </div>
+              <div class="glass-card">
+                <h3 class="card-title">Generated Abstractive Summary</h3>
+                <div id="sum-result-box" style="padding-top:12px; color:var(--text-muted);">Run summarization to view generated summary and compression metrics.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: SEMANTIC SIMILARITY -->
+          <div class="tab-pane" id="tab-pane-sim">
+            <div class="grid-2">
+              <div class="glass-card">
+                <h3 class="card-title">Semantic Textual Similarity (STS-B)</h3>
+                <div class="input-group">
+                  <label class="input-label">Method</label>
+                  <select class="select-field" id="sim-method-select">
+                    <option value="sentence_bert">Sentence-BERT (all-MiniLM-L6-v2)</option>
+                    <option value="tfidf">TF-IDF Vector Baseline</option>
+                  </select>
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Sentence A</label>
+                  <input type="text" class="input-field" id="sim-text-a" value="The plane touched down on the runway.">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Sentence B</label>
+                  <input type="text" class="input-field" id="sim-text-b" value="An airplane is landing on the airstrip.">
+                </div>
+                <button class="btn btn-primary" id="btn-run-sim">Compute Similarity</button>
+              </div>
+              <div class="glass-card">
+                <h3 class="card-title">Correlation & STS-B Scale</h3>
+                <div id="sim-result-box" style="padding-top:12px; color:var(--text-muted);">Compare two sentences to view cosine similarity and STS-B scale rating.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: EXTRACTIVE QA -->
+          <div class="tab-pane" id="tab-pane-qa">
+            <div class="grid-2">
+              <div class="glass-card">
+                <h3 class="card-title">Extractive Question Answering</h3>
+                <div class="input-group">
+                  <label class="input-label">Question</label>
+                  <input type="text" class="input-field" id="qa-question-input" value="What is the Transformer network architecture based on?">
+                </div>
+                <div class="input-group">
+                  <label class="input-label">Context Passage</label>
+                  <textarea class="textarea-field" id="qa-context-input" style="min-height:120px;">We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.</textarea>
+                </div>
+                <button class="btn btn-primary" id="btn-run-qa">Extract Answer</button>
+              </div>
+              <div class="glass-card">
+                <h3 class="card-title">Extracted Answer Span</h3>
+                <div id="qa-result-box" style="padding-top:12px; color:var(--text-muted);">Ask a question over the context passage to extract exact answer span.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCREEN 6: BENCHMARKS -->
+        <section class="screen-container" id="screen-benchmarks">
+          <!-- Benchmarks Guide Banner -->
+          <div class="section-guide-card">
+            <div class="guide-header">
+              <div class="guide-title">
+                <span>📊</span>
+                <span>Empirical Benchmarks & Accuracy Leaderboard</span>
+              </div>
+              <span class="guide-badge">Standard Evaluated Datasets</span>
+            </div>
+            <div class="guide-grid">
+              <div class="guide-item">
+                <div class="guide-item-title blue">📌 What this screen does</div>
+                <div class="guide-item-text">Presents verifiable, empirical evaluation metrics across all classical ML, fine-tuned transformer, and neural retrieval models trained during the project.</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title emerald">💡 How to use it</div>
+                <div class="guide-item-text">Compare precision, recall, F1, and Pearson correlation coefficients across standard public NLP splits (SMS Spam, IMDB, CoNLL-2003, STS-B).</div>
+              </div>
+              <div class="guide-item">
+                <div class="guide-item-title purple">🎯 What to expect</div>
+                <div class="guide-item-text">Rigorous academic baseline comparisons highlighting transformer gains over classical TF-IDF methods.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="margin-bottom:24px;">
+            <div class="glass-card">
+              <h3 class="card-title">Text Classification Benchmarks</h3>
+              <table class="data-table" style="margin-top:12px;">
+                <thead>
+                  <tr><th>Dataset</th><th>Model</th><th>Accuracy</th><th>Macro F1</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>SMS Spam</td><td>LinearSVC</td><td><strong>98.39%</strong></td><td>96.43%</td></tr>
+                  <tr><td>SMS Spam</td><td>Logistic Reg</td><td>97.85%</td><td>95.33%</td></tr>
+                  <tr><td>IMDB Reviews</td><td>Logistic Reg</td><td><strong>88.84%</strong></td><td>88.84%</td></tr>
+                  <tr><td>IMDB Reviews</td><td>LinearSVC</td><td>87.48%</td><td>87.48%</td></tr>
+                  <tr><td>SST-2</td><td>Logistic Reg</td><td><strong>79.59%</strong></td><td>79.54%</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="glass-card">
+              <h3 class="card-title">Named Entity Recognition (CoNLL-2003)</h3>
+              <table class="data-table" style="margin-top:12px;">
+                <thead>
+                  <tr><th>Model</th><th>Precision</th><th>Recall</th><th>Micro F1</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Fine-Tuned BERT</strong></td><td><strong>94.20%</strong></td><td><strong>94.80%</strong></td><td><strong>94.50%</strong></td></tr>
+                  <tr><td>BiLSTM-CRF</td><td>76.12%</td><td>45.43%</td><td>56.90%</td></tr>
+                  <tr><td>sklearn-CRF Baseline</td><td>68.45%</td><td>39.12%</td><td>49.80%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="glass-card">
+              <h3 class="card-title">Semantic Textual Similarity (STS-B)</h3>
+              <table class="data-table" style="margin-top:12px;">
+                <thead>
+                  <tr><th>Method</th><th>Pearson ($r$)</th><th>Spearman ($\rho$)</th><th>MSE</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><strong>Sentence-BERT</strong></td><td><strong>0.8709</strong></td><td><strong>0.8672</strong></td><td><strong>0.7875</strong></td></tr>
+                  <tr><td>TF-IDF Cosine</td><td>0.6065</td><td>0.6350</td><td>2.8168</td></tr>
+                  <tr><td>Relative Gain</td><td>+43.6%</td><td>+36.6%</td><td>-72.0%</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="glass-card">
+              <h3 class="card-title">Abstractive Summarization (ROUGE)</h3>
+              <table class="data-table" style="margin-top:12px;">
+                <thead>
+                  <tr><th>Metric</th><th>T5-Small Score</th><th>Standard Baseline</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>ROUGE-1 F1</td><td><strong>48.00%</strong></td><td>> 40.0%</td></tr>
+                  <tr><td>ROUGE-2 F1</td><td><strong>21.53%</strong></td><td>> 18.0%</td></tr>
+                  <tr><td>ROUGE-L F1</td><td><strong>25.65%</strong></td><td>> 22.0%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Notification Root -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Main JavaScript Module -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

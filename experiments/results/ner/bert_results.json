@@ -1,0 +1,93 @@
+{
+  "model_type": "bert_ner",
+  "model_name": "dslim/bert-base-NER",
+  "dataset": "conll2003",
+  "epochs": 3,
+  "lr": 2e-05,
+  "training_result": {
+    "epochs": 3,
+    "training_time_sec": 9464.29,
+    "val_metrics": {
+      "precision_micro": 0.9517,
+      "recall_micro": 0.9524,
+      "f1_micro": 0.9521,
+      "precision_macro": 0.9446,
+      "recall_macro": 0.9465,
+      "f1_macro": 0.9456,
+      "per_entity_metrics": [
+        {
+          "entity_type": "LOC",
+          "precision": 0.9769,
+          "recall": 0.9652,
+          "f1": 0.971,
+          "support": 1837
+        },
+        {
+          "entity_type": "MISC",
+          "precision": 0.9077,
+          "recall": 0.9176,
+          "f1": 0.9126,
+          "support": 922
+        },
+        {
+          "entity_type": "ORG",
+          "precision": 0.9264,
+          "recall": 0.9299,
+          "f1": 0.9282,
+          "support": 1341
+        },
+        {
+          "entity_type": "PER",
+          "precision": 0.9676,
+          "recall": 0.9734,
+          "f1": 0.9705,
+          "support": 1842
+        }
+      ],
+      "token_accuracy": 0.9914,
+      "sample_count": 3250,
+      "model_type": "bert_ner"
+    }
+  },
+  "test_metrics": {
+    "precision_micro": 0.9111,
+    "recall_micro": 0.9186,
+    "f1_micro": 0.9148,
+    "precision_macro": 0.8965,
+    "recall_macro": 0.9061,
+    "f1_macro": 0.9012,
+    "per_entity_metrics": [
+      {
+        "entity_type": "LOC",
+        "precision": 0.9372,
+        "recall": 0.9305,
+        "f1": 0.9338,
+        "support": 1668
+      },
+      {
+        "entity_type": "MISC",
+        "precision": 0.8019,
+        "recall": 0.8305,
+        "f1": 0.816,
+        "support": 702
+      },
+      {
+        "entity_type": "ORG",
+        "precision": 0.8844,
+        "recall": 0.9121,
+        "f1": 0.898,
+        "support": 1661
+      },
+      {
+        "entity_type": "PER",
+        "precision": 0.9625,
+        "recall": 0.9511,
+        "f1": 0.9568,
+        "support": 1617
+      }
+    ],
+    "token_accuracy": 0.9823,
+    "sample_count": 3453,
+    "model_type": "bert_ner"
+  }
+}

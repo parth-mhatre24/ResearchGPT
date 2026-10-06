@@ -1,0 +1,21 @@
+{
+  "dataset": "stsb",
+  "split": "validation",
+  "sample_count": 1500,
+  "tfidf_baseline": {
+    "pearson_correlation": 0.6065,
+    "spearman_correlation": 0.635,
+    "mse": 2.8168,
+    "sample_count": 1500,
+    "method": "tfidf",
+    "model_name": "tfidf"
+  },
+  "sentence_bert": {
+    "pearson_correlation": 0.8709,
+    "spearman_correlation": 0.8672,
+    "mse": 0.7875,
+    "sample_count": 1500,
+    "method": "sentence_bert",
+    "model_name": "sentence-transformers/all-MiniLM-L6-v2"
+  }
+}
