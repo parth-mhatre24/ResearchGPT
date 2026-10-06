@@ -1,5 +1,5 @@
 from pathlib import Path
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -13,9 +13,11 @@ class Settings(BaseSettings):
     ALLOWED_EXTENSIONS: set[str] = {".pdf"}
     ALLOWED_CONTENT_TYPES: set[str] = {"application/pdf"}
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=True,
+        extra="ignore",
+    )
 
 
 settings = Settings()

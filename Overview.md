@@ -272,6 +272,10 @@ ResearchGPT implements and benchmarks four distinct tiers of machine learning an
 * **Objective**: Deliver a 6-screen vanilla CSS3 glassmorphic interface with PDF drag-and-drop, RAG chat, document vector purging, and section guide banners.
 * **Key Artifacts**: `frontend/index.html`, `frontend/css/style.css`, `frontend/js/app.js`, `frontend/js/api.js`.
 
+### Stage 13: System Hardening, Edge-Case Resiliency & Final Sign-Off (Task 20)
+* **Objective**: Eliminate runtime and library deprecation warnings (Pydantic V2 migration, HTTP status codes), enforce boundary defenses (corrupted uploads, zero-byte PDFs, out-of-domain query refusals, Unicode symbol support), and execute the full test matrix.
+* **Key Artifacts**: `tests/unit/test_system_hardening.py`, `backend/app/core/config.py`, `backend/app/services/document_service.py`.
+
 ---
 
 ## 4. Verification & Testing Summary
@@ -282,7 +286,7 @@ The entire repository is verified using automated pytest suites:
 python -m pytest tests/ -q
 ```
 
-**Verification Status: 115 / 115 Tests Passing Cleanly (100% Success Rate)**
+**Verification Status: 120 / 120 Tests Passing Cleanly (100% Success Rate)**
 
 * `tests/unit/test_classification_models.py` (9/9 passed)
 * `tests/unit/test_ner_services.py` (8/8 passed)
@@ -293,6 +297,7 @@ python -m pytest tests/ -q
 * `tests/unit/test_summarization_service.py` (4/4 passed)
 * `tests/unit/test_similarity_service.py` (5/5 passed)
 * `tests/unit/test_vector_retrieval.py` (8/8 passed)
+* `tests/unit/test_system_hardening.py` (5/5 passed)
 * `tests/integration/test_api_endpoints.py` (13/13 passed)
 * `tests/integration/test_end_to_end_workflow.py` (3/3 passed)
 * `tests/integration/test_frontend_static_serving.py` (4/4 passed)
