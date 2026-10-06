@@ -10,6 +10,14 @@ from backend.app.models.document import (
     DocumentUploadResponse,
     PageExtraction,
 )
+from backend.app.models.embeddings import (
+    ChunkMetadata,
+    ChunkingRequest,
+    ChunkingResponse,
+    DocumentChunk,
+    EmbeddingRequest,
+    EmbeddingResponse,
+)
 from backend.app.models.ner import (
     NEREvaluationMetrics,
     NEREntity,
@@ -22,6 +30,31 @@ from backend.app.models.preprocessing import (
     ClassicalPreprocessingResponse,
     TransformerPreprocessingRequest,
     TransformerPreprocessingResponse,
+)
+from backend.app.models.qa import (
+    QABatchRequest,
+    QABatchResponse,
+    QAEvaluationMetrics,
+    QARequest,
+    QAResponse,
+)
+from backend.app.models.rag import (
+    RAGQueryRequest,
+    RAGQueryResponse,
+    SourceCitation,
+)
+from backend.app.models.retrieval import (
+    IndexInfo,
+    RetrievalQuery,
+    RetrievalResponse,
+    RetrievedDocumentChunk,
+)
+from backend.app.models.similarity import (
+    SimilarityBatchRequest,
+    SimilarityBatchResponse,
+    SimilarityEvaluationMetrics,
+    SimilarityPairRequest,
+    SimilarityPairResponse,
 )
 from backend.app.models.summarization import (
     SummarizationEvaluationMetrics,
@@ -48,4 +81,27 @@ __all__ = [
     "SummarizationEvaluationMetrics",
     "SummarizationRequest",
     "SummarizationResponse",
+    "ChunkMetadata",
+    "ChunkingRequest",
+    "ChunkingResponse",
+    "DocumentChunk",
+    "EmbeddingRequest",
+    "EmbeddingResponse",
+    "IndexInfo",
+    "RetrievalQuery",
+    "RetrievalResponse",
+    "RetrievedDocumentChunk",
+    "SimilarityBatchRequest",
+    "SimilarityBatchResponse",
+    "SimilarityEvaluationMetrics",
+    "SimilarityPairRequest",
+    "SimilarityPairResponse",
+    "QABatchRequest",
+    "QABatchResponse",
+    "QAEvaluationMetrics",
+    "QARequest",
+    "QAResponse",
+    "RAGQueryRequest",
+    "RAGQueryResponse",
+    "SourceCitation",
 ]

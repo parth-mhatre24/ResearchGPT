@@ -53,6 +53,7 @@ class NERResponse(BaseModel):
     predicted_labels: List[str] = Field(..., description="IOB2 label per token")
     entities: List[NEREntity] = Field(..., description="Extracted entity spans")
     model_type: str = Field(..., description="Model architecture used")
+    latency_ms: Optional[float] = Field(default=None, description="Inference latency in milliseconds")
 
 
 # ---------------------------------------------------------------------------
